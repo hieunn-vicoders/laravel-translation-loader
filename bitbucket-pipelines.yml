@@ -1,0 +1,19 @@
+image: maven:3.3.9
+
+clone:
+  depth: full
+
+pipelines:
+  branches:
+    '{master}':
+      - step:
+          name: SonarQube analysis
+          script:
+            - pipe: sonarsource/sonarqube-scan:1.0.0
+              variables:
+                SONAR_HOST_URL: http://api.dev.webpress.vn:30010 # Get the value from the repository/workspace variable.
+                SONAR_TOKEN: 6d19915d298d6e5e8ee82c75928b886605efc516 # Get the value from the repository/workspace variable. You shouldn't set secret in clear text here.
+  
+definitions:
+  caches:
+    sonar: ~/.sonar
